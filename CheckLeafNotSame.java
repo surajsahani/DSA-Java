@@ -13,8 +13,8 @@ class Node{
         left = right = null;
     }
 }
-public class BinaryTreeSumTree {
-
+public class CheckLeafNotSame {
+    
     static Node buildTree(String str) {
 
         if(str.length()==0 || str.charAt(0)=='N'){
@@ -25,63 +25,64 @@ public class BinaryTreeSumTree {
         Queue<Node> queue = new LinkedList<>();
         queue.add(root);
         int i= 1;
-    
+
         while(queue.size()>0 && i < ip.length) {
-    
+
             Node currNode = queue.peek();
             queue.remove();
-    
+
             String currVal = ip[i];
         if(!currVal.equals("N")) {
             currNode.left = new Node(Integer.parseInt(currVal));
             queue.add(currNode.left);
              }
-    
+
         i++;
         if(i >=ip.length)
         break;
-    
+
         currVal = ip[i];
         if(!currVal.equals("N")){
             currNode.right = new Node(Integer.parseInt(currVal));
             queue.add(currNode.right);
         }
         i++;
-    
+
         }
         
         return root;   
     }
-
+    
     public static void main(String[] args) throws IOException{
-        
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+         
         int t = Integer.parseInt(br.readLine());
-        while(t > 0 ){
-            String s = br.readLine();
+        while(t >0) {
+            String  s = br.readLine();
             Node root = buildTree(s);
-            BinaryTreeSumTreeSol g = new BinaryTreeSumTreeSol();
+            CheckLeafNotSameSol  g = new CheckLeafNotSameSol();
 
             if(g.isSumTree(root) == true)
             System.out.println(1);
-            else 
+             else
             System.out.println(0);
+            t--;
         }
-        
+
     }
 }
 
-class BinaryTreeSumTreeSol{
-
+class CheckLeafNotSameSol {
     int val = 0;
+
     boolean isSumTree(Node root){
         if(root==null) return true;
         if(root.left==null && root.right==null) return true;
-        int lSum = calcSum(root.right);
-        int val = 0;
+        int lsum = calcSum(root.left);
+        val = 0;
         int rsum = calcSum(root.right);
-        if(lSum+rsum==root.data) return true;
+        if(lsum+rsum==root.data) return true;
         return false;
     }
     public int calcSum(Node root){
